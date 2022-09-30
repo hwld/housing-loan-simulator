@@ -11,7 +11,7 @@ export type Page = typeof page[keyof typeof page];
 type Props = { currentPage: Page[keyof Page] };
 export const SideMenu: React.FC<Props> = ({ currentPage }) => {
   return (
-    <div className="w-full h-full bg-red-700 px-4 py-6 border-r">
+    <div className="w-full h-full bg-red-700 px-4 py-6 rounded-r-2xl shadow-lg shadow-red-500">
       <Link href={page.repayment}>
         <a>
           <h2 className="flex items-center text-xl font-bold ">

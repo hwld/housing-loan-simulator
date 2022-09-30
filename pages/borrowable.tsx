@@ -1,11 +1,11 @@
 import { NextPage } from "next";
-import { Layout } from "../src/components/Layout";
-import { Simulator } from "../src/components/Simulator";
+import { BorrowableSimulatorBasedIncome } from "../src/components/simulator/borrowable/BorrowableSimulatorBasedIncome";
+import { Layout } from "../src/components/ui/Layout";
 
 const Borrowable: NextPage = () => {
   return (
     <Layout currentPage="/borrowable">
-      <Simulator />
+      <BorrowableSimulatorBasedIncome />
     </Layout>
   );
 };
