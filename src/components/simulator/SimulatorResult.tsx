@@ -1,17 +1,36 @@
+import { ReactNode } from "react";
+import { FaInfoCircle } from "react-icons/fa";
+import { clsx } from "../../classnames";
 import { Button } from "../ui/Button";
-import { MainResultCard } from "./MainResultCard";
-import { SubResultCard } from "./SubResultCard";
 
-export const SimulatorResult: React.FC = () => {
+type Props = { children: ReactNode; isShown?: boolean };
+export const SimulatorResult: React.FC<Props> = ({
+  children,
+  isShown = false,
+}) => {
   return (
-    <div className="flex flex-col space-y-6 rounded-lg bg-gray-200 p-6 shadow-inner">
-      <h4 className="text-2xl font-bold">シミュレーション結果</h4>
-      <div className="flex flex-col space-y-3">
-        <MainResultCard title="月々の返済額" result="10,000円" />
-        <SubResultCard title="支払総額" result="10,000円" />
-        <SubResultCard title="利子総額" result="10,000円" />
+    <div className="relative flex flex-col justify-between rounded-lg bg-gray-200 p-6 shadow-inner">
+      <div
+        className={clsx(
+          "space-y-6 transition-all duration-200",
+          isShown ? "opacity-100" : "opacity-0"
+        )}
+      >
+        <h4 className="text-2xl font-bold">シミュレーション結果</h4>
+        <div className={clsx("flex flex-col space-y-3")}>{children}</div>
+        <Button>画像をダウンロード</Button>
       </div>
-      <Button>画像をダウンロード</Button>
+      <div
+        className={clsx(
+          "flex flex-col items-center text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 text-gray-400",
+          isShown ? "opacity-0" : "opacity-100"
+        )}
+      >
+        <FaInfoCircle className="w-10 h-10" />
+        <p className="mt-3">
+          必要な項目を入力し、「計算する」ボタンを押してください。
+        </p>
+      </div>
     </div>
   );
 };
