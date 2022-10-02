@@ -4,7 +4,8 @@ import { SideMenuItem } from "./SideMenuItem";
 
 const page = {
   repayment: "/repayment",
-  borrowable: "/borrowable",
+  borrowableByMonthly: "/borrowable/monthly-repayment",
+  borrowableByIncome: "/borrowable/income",
 } as const;
 export type Page = typeof page[keyof typeof page];
 
@@ -30,11 +31,18 @@ export const SideMenu: React.FC<Props> = ({ currentPage }) => {
           <p className="ml-3">月々の返済額</p>
         </SideMenuItem>
         <SideMenuItem
-          href={page.borrowable}
-          isActive={page.borrowable === currentPage}
+          href={page.borrowableByMonthly}
+          isActive={page.borrowableByMonthly === currentPage}
         >
           <FaCalculator className="w-5 h-5" />
-          <p className="ml-3">借入可能額</p>
+          <p className="ml-3">借入可能額(月々の返済額から)</p>
+        </SideMenuItem>
+        <SideMenuItem
+          href={page.borrowableByIncome}
+          isActive={page.borrowableByIncome === currentPage}
+        >
+          <FaCalculator className="w-5 h-5" />
+          <p className="ml-3">借入可能額(年収から)</p>
         </SideMenuItem>
       </nav>
     </div>

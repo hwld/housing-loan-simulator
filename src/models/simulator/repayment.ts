@@ -17,7 +17,7 @@ export type RepaymentResult = {
   totalInterest: number;
 };
 
-export const RepaymentInputs = (
+export const repaymentInputs = (
   formData: RepaymentFormData
 ): RepaymentInputs | undefined => {
   if (Object.values(formData).some((d) => Number.isNaN(Number(d)))) {

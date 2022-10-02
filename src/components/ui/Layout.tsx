@@ -8,7 +8,7 @@ export const Layout: React.FC<Props> = ({ children, currentPage }) => {
       <div className="w-80 shrink-0">
         <SideMenu currentPage={currentPage} />
       </div>
-      <main className="flex-grow flex justify-center items-center p-6">
+      <main className="flex-grow flex justify-center h-fit p-6 mt-16">
         {children}
       </main>
     </div>

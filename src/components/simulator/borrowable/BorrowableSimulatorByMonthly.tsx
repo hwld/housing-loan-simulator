@@ -1,62 +1,63 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  RepaymentFormData,
-  repaymentInputs,
-  RepaymentResult,
-  simulateRepayment,
-} from "../../../models/simulator/repayment";
+  BorrowableByMonthlyFormData,
+  borrowableByMonthlyInputs,
+  BorrowableByMonthlyResult,
+  simulateBorrowableByMonthly,
+} from "../../../models/simulator/borrowable/monthlyRepayment";
 import { MainResultCard } from "../MainResultCard";
 import { Simulator } from "../Simulator";
 import { SimulatorInput } from "../SimulatorInput";
 import { SimulatorResult } from "../SimulatorResult";
-import { SubResultCard } from "../SubResultCard";
 
-export const RepaymentSimulator: React.FC = () => {
+// 毎月の返済額から借入可能額を求める
+export const BorrowableSimulatorByMonthy: React.FC = () => {
   const [simulateResult, setSimulateResult] = useState<
-    RepaymentResult | undefined
+    BorrowableByMonthlyResult | undefined
   >(undefined);
 
   const {
     register,
     handleSubmit: buildSubmitHandler,
     formState: { errors },
-  } = useForm<RepaymentFormData>();
+  } = useForm<BorrowableByMonthlyFormData>();
 
-  const handleSubmit: SubmitHandler<RepaymentFormData> = (formData) => {
-    const inputs = repaymentInputs(formData);
+  const handleSubmit: SubmitHandler<BorrowableByMonthlyFormData> = (
+    formData
+  ) => {
+    const inputs = borrowableByMonthlyInputs(formData);
     if (inputs === undefined) {
       throw new Error("");
     }
 
-    setSimulateResult(simulateRepayment(inputs));
+    setSimulateResult(simulateBorrowableByMonthly(inputs));
   };
 
   return (
     <Simulator
       onSimulate={buildSubmitHandler(handleSubmit)}
-      title="月々の返済額を求める"
+      title="借入可能額を求める (月々の支払額から)"
       inputs={
         <>
           <SimulatorInput
-            label="借入額"
-            placeholder="3500"
+            label="月々の支払額"
+            placeholder="10"
             unit="万円"
-            error={errors.borrowableAmount}
-            {...register("borrowableAmount", {
+            error={errors.monthlyRepayment}
+            {...register("monthlyRepayment", {
               required: {
                 value: true,
                 message: "必須項目です。",
               },
               maxLength: {
-                value: 5,
-                message: "5桁以下の金額を入力してください。",
+                value: 4,
+                message: "4桁以下の金額を入力してください。",
               },
               min: {
-                value: 100,
-                message: "100万円以上の金額を入力してください。",
+                value: 1,
+                message: "1万円以上の金額を入力してください。",
               },
-              //　小数を入力したときにブラウザ検証のエラーメッセージを出さないようにする
               pattern: {
                 value: /^\d*$/g,
                 message: "半角整数を入力してください。",
@@ -65,8 +66,8 @@ export const RepaymentSimulator: React.FC = () => {
           />
           <SimulatorInput
             label="年利"
-            unit="%"
             placeholder="1.2"
+            unit="%"
             error={errors.annualInterest}
             {...register("annualInterest", {
               required: {
@@ -88,9 +89,9 @@ export const RepaymentSimulator: React.FC = () => {
             })}
           />
           <SimulatorInput
-            label="返済期間"
-            unit="年"
+            label="借入期間"
             placeholder="35"
+            unit="年"
             error={errors.yearsOfRepayment}
             {...register("yearsOfRepayment", {
               required: {
@@ -114,22 +115,13 @@ export const RepaymentSimulator: React.FC = () => {
         </>
       }
       result={
-        // レイアウトシフトを防ぐためにSimulatorResultの方で結果の表示・非表示を制御させる。
         <SimulatorResult isShown={simulateResult !== undefined}>
           <MainResultCard
-            title="月々の返済額"
-            result={simulateResult?.monthlyRepaymentAmount}
-          />
-          <SubResultCard
-            title="支払総額"
-            result={simulateResult?.totalRepaymentAmount}
-          />
-          <SubResultCard
-            title="利子総額"
-            result={simulateResult?.totalInterest}
+            title="借入可能額"
+            result={simulateResult?.borrowableAmount}
           />
         </SimulatorResult>
       }
-    />
+    ></Simulator>
   );
 };

@@ -22,13 +22,14 @@ export const SimulatorInput: React.FC<Props> = forwardRef<
             textRight
             isError={isError}
             id={inputId}
+            autoComplete="off"
             {...props}
           />
         </div>
         <p className="ml-2">{unit}</p>
       </div>
       <div className="h-5 mt-1">
-        <p className="ml-3 text-sm text-red-400">{error?.message}</p>
+        <p className="ml-1 text-sm text-red-400">{error?.message}</p>
       </div>
     </div>
   );

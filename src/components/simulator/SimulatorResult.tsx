@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { clsx } from "../../classnames";
-import { Button } from "../ui/Button";
 
 type Props = { children: ReactNode; isShown?: boolean };
 export const SimulatorResult: React.FC<Props> = ({
@@ -13,17 +12,16 @@ export const SimulatorResult: React.FC<Props> = ({
       <div
         className={clsx(
           "space-y-6 transition-all duration-200",
-          isShown ? "opacity-100" : "opacity-0"
+          isShown ? "opacity-100" : "opacity-0 invisible"
         )}
       >
         <h4 className="text-2xl font-bold">シミュレーション結果</h4>
         <div className={clsx("flex flex-col space-y-3")}>{children}</div>
-        <Button>画像をダウンロード</Button>
       </div>
       <div
         className={clsx(
           "flex flex-col items-center text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 text-gray-400",
-          isShown ? "opacity-0" : "opacity-100"
+          isShown ? "opacity-0 invisible" : "opacity-100"
         )}
       >
         <FaInfoCircle className="w-10 h-10" />
