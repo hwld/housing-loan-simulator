@@ -1,33 +1,35 @@
-export type BorrowableByMonthlyFormData = {
-  monthlyRepayment: string;
-  annualInterest: string;
-  yearsOfRepayment: string;
-};
+import { z } from "zod";
+import { annualInterestSchema, yearsOfRepaymentSchema } from "../common";
 
-export type BorrowableByMonthlyInputs = {
-  [T in keyof BorrowableByMonthlyFormData]: number;
-};
+//入力データのスキーマ
+export const borrowableByMonthlySchema = z
+  .object({
+    monthlyRepayment: z
+      .number({ invalid_type_error: "半角数字を入力してください。" })
+      .int("整数を入力してください。")
+      .min(1, { message: "1万円以上の金額を入力してください。" })
+      .max(99999, { message: "5桁以下の金額を入力してください。" }),
+    annualInterest: annualInterestSchema,
+    yearsOfRepayment: yearsOfRepaymentSchema,
+  })
+  .transform((d) => {
+    return {
+      ...d,
+      monthlyRepayment: d.monthlyRepayment * 10000,
+      annualInterest: d.annualInterest / 100,
+    };
+  });
+
+export type BorrowableByMonthlyFormData = z.infer<
+  typeof borrowableByMonthlySchema
+>;
 
 export type BorrowableByMonthlyResult = {
   borrowableAmount: number;
 };
 
-export const borrowableByMonthlyInputs = (
-  formData: BorrowableByMonthlyFormData
-): BorrowableByMonthlyInputs | undefined => {
-  if (Object.values(formData).some((d) => Number.isNaN(Number(d)))) {
-    return undefined;
-  }
-
-  return {
-    monthlyRepayment: Number(formData.monthlyRepayment) * 10000,
-    annualInterest: Number(formData.annualInterest) / 100,
-    yearsOfRepayment: Number(formData.yearsOfRepayment),
-  };
-};
-
 export const simulateBorrowableByMonthly = (
-  inputs: BorrowableByMonthlyInputs
+  inputs: BorrowableByMonthlyFormData
 ): BorrowableByMonthlyResult => {
   const monthlyInterest = inputs.annualInterest / 12;
   const monthsOfRepayment = inputs.yearsOfRepayment * 12;

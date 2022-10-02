@@ -1,14 +1,26 @@
-//　実際にユーザーが入力するデータ
-export type RepaymentFormData = {
-  borrowableAmount: string;
-  annualInterest: string;
-  yearsOfRepayment: string;
-};
+import { z } from "zod";
+import { annualInterestSchema, yearsOfRepaymentSchema } from "./common";
 
-// システムに入力するデータ
-export type RepaymentInputs = {
-  [T in keyof RepaymentFormData]: number;
-};
+// 入力データのスキーマ
+export const repaymentSchema = z
+  .object({
+    borrowableAmount: z
+      .number({ invalid_type_error: "半角数字を入力してください。" })
+      .int("整数を入力してください。")
+      .min(100, { message: "100万円以上の金額を入力してください。" })
+      .max(99999, { message: "5桁以下の金額を入力してください。" }),
+    annualInterest: annualInterestSchema,
+    yearsOfRepayment: yearsOfRepaymentSchema,
+  })
+  .transform((d) => {
+    return {
+      ...d,
+      borrowableAmount: d.borrowableAmount * 10000,
+      annualInterest: d.annualInterest / 100,
+    };
+  });
+
+export type RepaymentFormData = z.infer<typeof repaymentSchema>;
 
 // シミュレーション結果
 export type RepaymentResult = {
@@ -17,23 +29,9 @@ export type RepaymentResult = {
   totalInterest: number;
 };
 
-export const repaymentInputs = (
-  formData: RepaymentFormData
-): RepaymentInputs | undefined => {
-  if (Object.values(formData).some((d) => Number.isNaN(Number(d)))) {
-    return undefined;
-  }
-
-  return {
-    // 万単位で入力されているのを円に変換する。
-    borrowableAmount: Number(formData.borrowableAmount) * 10000,
-    // %単位で入力されているので、少数に変換する。
-    annualInterest: Number(formData.annualInterest) / 100,
-    yearsOfRepayment: Number(formData.yearsOfRepayment),
-  };
-};
-
-export const simulateRepayment = (inputs: RepaymentInputs): RepaymentResult => {
+export const simulateRepayment = (
+  inputs: RepaymentFormData
+): RepaymentResult => {
   const monthlyInterest = inputs.annualInterest / 12;
   const monthsOfRepayment = inputs.yearsOfRepayment * 12;
   const tmp = Math.pow(1 + monthlyInterest, monthsOfRepayment);
