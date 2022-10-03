@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaCalculator, FaHome } from "react-icons/fa";
 import { SideMenuItem } from "./SideMenuItem";
+import { SideMenuItemGroup } from "./SideMenuItemGroup";
 
 const page = {
   repayment: "/repayment",
@@ -26,24 +27,26 @@ export const SideMenu: React.FC<Props> = ({ currentPage }) => {
         <SideMenuItem
           href={page.repayment}
           isActive={page.repayment === currentPage}
+          icon={FaCalculator}
         >
-          <FaCalculator className="w-5 h-5" />
-          <p className="ml-3">月々の返済額</p>
+          月々の返済額
         </SideMenuItem>
-        <SideMenuItem
-          href={page.borrowableByMonthly}
-          isActive={page.borrowableByMonthly === currentPage}
-        >
-          <FaCalculator className="w-5 h-5" />
-          <p className="ml-3">借入可能額(月々の返済額から)</p>
-        </SideMenuItem>
-        <SideMenuItem
-          href={page.borrowableByIncome}
-          isActive={page.borrowableByIncome === currentPage}
-        >
-          <FaCalculator className="w-5 h-5" />
-          <p className="ml-3">借入可能額(年収から)</p>
-        </SideMenuItem>
+        <SideMenuItemGroup>
+          <SideMenuItem
+            href={page.borrowableByMonthly}
+            isActive={page.borrowableByMonthly === currentPage}
+            icon={FaCalculator}
+          >
+            月々の返済額から
+          </SideMenuItem>
+          <SideMenuItem
+            href={page.borrowableByIncome}
+            isActive={page.borrowableByIncome === currentPage}
+            icon={FaCalculator}
+          >
+            年収から
+          </SideMenuItem>
+        </SideMenuItemGroup>
       </nav>
     </div>
   );

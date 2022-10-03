@@ -20,7 +20,7 @@ export const Simulator: React.FC<Props> = ({
 
   return (
     <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg px-4 py-6 space-y-6 shadow-lg">
-      <h3 className="text-xl text-red-700">{title}</h3>
+      <h3 className="text-xl text-red-700 select-none">{title}</h3>
       <div className="flex-grow grid grid-cols-2 gap-3">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-1">{inputs}</div>
