@@ -8,6 +8,18 @@ module.exports = {
       fontFamily: {
         sans: ["Noto Sans JP", ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        slideDown: {
+          from: { transform: "translateY(-20px)", opacity: 0 },
+        },
+        slideUp: {
+          to: { transform: "translateY(-20px)", opacity: 0 },
+        },
+      },
+      animation: {
+        slideDown: "slideDown 250ms ease-out",
+        slideUp: "slideUp 250ms ease-out",
+      },
     },
   },
   plugins: [],
