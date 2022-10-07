@@ -7,10 +7,13 @@ type Props = { children: ReactNode };
 
 export const SideMenuItemGroup: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
+  //　一度でもトグルをクリックしたか
+  const [toggled, setToggled] = useState(false);
 
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
     setIsOpen((s) => !s);
+    setToggled(true);
   };
 
   return (
@@ -26,11 +29,10 @@ export const SideMenuItemGroup: React.FC<Props> = ({ children }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="ml-5 mt-2 space-y-1 -z-10"
-            initial={{ opacity: 0, y: -5 }}
+            className="ml-5 mt-2 space-y-1"
+            initial={toggled ? { opacity: 0, y: -10 } : {}}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            layout
+            exit={{ opacity: 0, y: -10 }}
           >
             {children}
           </motion.div>
