@@ -25,6 +25,7 @@ export const SideMenuItem: React.FC<Props> = ({
     <Link {...props}>
       <motion.a
         layout={layout}
+        transition={{ layout: { duration: 0.15, ease: "easeOut" } }}
         className={`${baseClass} ${isActive ? activeClass : normalClass}`}
       >
         <div className="flex">
