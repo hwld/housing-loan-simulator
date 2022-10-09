@@ -58,7 +58,6 @@ export const RepaymentSimulator: React.FC = () => {
         </>
       }
       result={
-        // レイアウトシフトを防ぐためにSimulatorResultの方で結果の表示・非表示を制御させる。
         <SimulatorResult isShown={simulateResult !== undefined}>
           <MainResultCard
             title="月々の返済額"

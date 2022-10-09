@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaDownload, FaInfoCircle } from "react-icons/fa";
 import { clsx } from "../../classnames";
+import { Tooltip } from "../ui/Tooltip";
 
 type Props = { children: ReactNode; isShown?: boolean };
 export const SimulatorResult: React.FC<Props> = ({
@@ -17,7 +18,18 @@ export const SimulatorResult: React.FC<Props> = ({
             animate={{ opacity: 1 }}
             className={clsx("space-y-6 duration-200")}
           >
-            <h4 className="text-2xl font-bold">シミュレーション結果</h4>
+            <div className="flex flex-row items-center space-x-3">
+              <h4 className="text-2xl font-bold">シミュレーション結果</h4>
+              <Tooltip
+                trigger={
+                  <button className="border border-red-600 hover:bg-red-500/10 transition-all  p-2 rounded-full">
+                    <FaDownload className="fill-red-600"></FaDownload>
+                  </button>
+                }
+              >
+                結果を画像としてダウンロード
+              </Tooltip>
+            </div>
             <div className={clsx("flex flex-col space-y-3")}>{children}</div>
           </motion.div>
         ) : (
