@@ -29,6 +29,9 @@ export type RepaymentResult = {
   totalInterest: number;
 };
 
+// 結果値と、その時点の入力値
+export type RepaymentSnapshot = RepaymentResult & RepaymentFormData;
+
 export const simulateRepayment = (
   inputs: RepaymentFormData
 ): RepaymentResult => {

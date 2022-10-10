@@ -1,55 +1,25 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toPng } from "html-to-image";
-import { useId, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  RepaymentFormData,
-  RepaymentResult,
-  repaymentSchema,
-  simulateRepayment,
-} from "../../../models/simulator/repayment";
 import { MainResultCard } from "../MainResultCard";
 import { Simulator } from "../Simulator";
 import { SimulatorInput } from "../SimulatorInput";
 import { SimulatorResult } from "../SimulatorResult";
 import { SubResultCard } from "../SubResultCard";
+import { useDownloadElement } from "../useDownloadResult";
 import { RepaymentResultDoc } from "./RepaymentResultDoc";
+import { useRepaymentSimulator } from "./useRepaymentSimulator";
 
 export const RepaymentSimulator: React.FC = () => {
-  const [simulateResult, setSimulateResult] = useState<
-    (RepaymentResult & RepaymentFormData) | undefined
-  >(undefined);
-
   const {
-    register,
-    handleSubmit: buildSubmitHandler,
-    formState: { errors },
-    getValues,
-  } = useForm<RepaymentFormData>({ resolver: zodResolver(repaymentSchema) });
+    simulate,
+    simulationResult,
+    simulationsInputs: { register, errors },
+  } = useRepaymentSimulator();
 
-  const handleSubmit: SubmitHandler<RepaymentFormData> = (formData) => {
-    const result = simulateRepayment(formData);
-    setSimulateResult({ ...result, ...getValues() });
-  };
-
-  const resultForDownloadId = useId();
-  const handleDownload = async () => {
-    const element = document.getElementById(resultForDownloadId);
-    if (!element) {
-      return;
-    }
-
-    const imgUrl = await toPng(element);
-    const a = document.createElement("a");
-    a.href = imgUrl;
-    a.download = "result.png";
-    a.click();
-  };
+  const { downloadId, handleDownload } = useDownloadElement();
 
   return (
     <div>
       <Simulator
-        onSimulate={buildSubmitHandler(handleSubmit)}
+        onSimulate={simulate}
         title="月々の返済額を求める"
         inputs={
           <>
@@ -78,28 +48,25 @@ export const RepaymentSimulator: React.FC = () => {
         }
         result={
           <SimulatorResult
-            isShown={simulateResult !== undefined}
+            isShown={simulationResult !== undefined}
             resultForDownload={
-              simulateResult && (
-                <RepaymentResultDoc
-                  id={resultForDownloadId}
-                  result={simulateResult}
-                />
+              simulationResult && (
+                <RepaymentResultDoc id={downloadId} result={simulationResult} />
               )
             }
             onDownload={handleDownload}
           >
             <MainResultCard
               title="月々の返済額"
-              result={simulateResult?.monthlyRepaymentAmount}
+              result={simulationResult?.monthlyRepaymentAmount}
             />
             <SubResultCard
               title="支払総額"
-              result={simulateResult?.totalRepaymentAmount}
+              result={simulationResult?.totalRepaymentAmount}
             />
             <SubResultCard
               title="利子総額"
-              result={simulateResult?.totalInterest}
+              result={simulationResult?.totalInterest}
             />
           </SimulatorResult>
         }

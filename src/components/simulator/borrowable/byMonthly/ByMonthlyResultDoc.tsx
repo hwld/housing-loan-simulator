@@ -1,10 +1,10 @@
 import {
   BorrowableByMonthlyFormData,
   BorrowableByMonthlyResult,
-} from "../../../models/simulator/borrowable/monthlyRepayment";
-import { ResultDoc } from "../resultDoc/ResultDoc";
-import { ResultDocCard } from "../resultDoc/ResultDocCard";
-import { ResultDocInputCard } from "../resultDoc/ResultDocInputCard";
+} from "../../../../models/simulator/borrowable/monthlyRepayment";
+import { ResultDoc } from "../../resultDoc/ResultDoc";
+import { ResultDocCard } from "../../resultDoc/ResultDocCard";
+import { ResultDocInputCard } from "../../resultDoc/ResultDocInputCard";
 
 type Props = {
   result: BorrowableByMonthlyResult & BorrowableByMonthlyFormData;

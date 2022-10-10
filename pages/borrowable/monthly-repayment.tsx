@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { BorrowableSimulatorByMonthy } from "../../src/components/simulator/borrowable/BorrowableSimulatorByMonthly";
+import { BorrowableSimulatorByMonthy } from "../../src/components/simulator/borrowable/byMonthly/BorrowableSimulatorByMonthly";
 import { Layout } from "../../src/components/ui/Layout";
 
 //

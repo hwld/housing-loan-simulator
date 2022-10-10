@@ -28,6 +28,9 @@ export type BorrowableByIncomeResult = {
   borrowableAmount: number;
 };
 
+export type BorrowableByIncomeSnapshot = BorrowableByIncomeResult &
+  BorrowableByIncomeFormData;
+
 export const simulateBorrowableByIncome = (
   inputs: BorrowableByIncomeFormData
 ): BorrowableByIncomeResult => {

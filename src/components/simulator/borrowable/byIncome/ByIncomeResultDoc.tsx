@@ -1,10 +1,10 @@
 import {
   BorrowableByIncomeFormData,
   BorrowableByIncomeResult,
-} from "../../../models/simulator/borrowable/income";
-import { ResultDoc } from "../resultDoc/ResultDoc";
-import { ResultDocCard } from "../resultDoc/ResultDocCard";
-import { ResultDocInputCard } from "../resultDoc/ResultDocInputCard";
+} from "../../../../models/simulator/borrowable/income";
+import { ResultDoc } from "../../resultDoc/ResultDoc";
+import { ResultDocCard } from "../../resultDoc/ResultDocCard";
+import { ResultDocInputCard } from "../../resultDoc/ResultDocInputCard";
 
 type Props = {
   result: BorrowableByIncomeResult & BorrowableByIncomeFormData;

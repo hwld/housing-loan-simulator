@@ -28,6 +28,9 @@ export type BorrowableByMonthlyResult = {
   borrowableAmount: number;
 };
 
+export type BorrowableByMonthlySnapshot = BorrowableByMonthlyResult &
+  BorrowableByMonthlyFormData;
+
 export const simulateBorrowableByMonthly = (
   inputs: BorrowableByMonthlyFormData
 ): BorrowableByMonthlyResult => {
