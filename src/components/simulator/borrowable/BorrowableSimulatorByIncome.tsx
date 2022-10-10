@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { toPng } from "html-to-image";
+import { useId, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   BorrowableByIncomeFormData,
@@ -11,16 +12,18 @@ import { MainResultCard } from "../MainResultCard";
 import { Simulator } from "../Simulator";
 import { SimulatorInput } from "../SimulatorInput";
 import { SimulatorResult } from "../SimulatorResult";
+import { ByIncomeResultDoc } from "./ByIncomeResultDoc";
 
 export const BorrowableSimulatorByIncome: React.FC = () => {
   const [simulateResult, setSimulateResult] = useState<
-    BorrowableByIncomeResult | undefined
+    (BorrowableByIncomeResult & BorrowableByIncomeFormData) | undefined
   >(undefined);
 
   const {
     register,
     handleSubmit: buildSubmitHandler,
     formState: { errors },
+    getValues,
   } = useForm<BorrowableByIncomeFormData>({
     resolver: zodResolver(borrowableByIncomeSchema),
   });
@@ -28,7 +31,22 @@ export const BorrowableSimulatorByIncome: React.FC = () => {
   const handleSubmit: SubmitHandler<BorrowableByIncomeFormData> = (
     formData
   ) => {
-    setSimulateResult(simulateBorrowableByIncome(formData));
+    const result = simulateBorrowableByIncome(formData);
+    setSimulateResult({ ...result, ...getValues() });
+  };
+
+  const resultForDownloadId = useId();
+  const handleDownload = async () => {
+    const element = document.getElementById(resultForDownloadId);
+    if (!element) {
+      return;
+    }
+
+    const imgUrl = await toPng(element);
+    const a = document.createElement("a");
+    a.href = imgUrl;
+    a.download = "result.png";
+    a.click();
   };
 
   return (
@@ -61,7 +79,18 @@ export const BorrowableSimulatorByIncome: React.FC = () => {
         </>
       }
       result={
-        <SimulatorResult isShown={simulateResult !== undefined}>
+        <SimulatorResult
+          isShown={simulateResult !== undefined}
+          resultForDownload={
+            simulateResult && (
+              <ByIncomeResultDoc
+                id={resultForDownloadId}
+                result={simulateResult}
+              />
+            )
+          }
+          onDownload={handleDownload}
+        >
           <MainResultCard
             title="借入可能額"
             result={simulateResult?.borrowableAmount}

@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import { toPng } from "html-to-image";
+import React, { useId, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   BorrowableByMonthlyFormData,
@@ -11,17 +12,19 @@ import { MainResultCard } from "../MainResultCard";
 import { Simulator } from "../Simulator";
 import { SimulatorInput } from "../SimulatorInput";
 import { SimulatorResult } from "../SimulatorResult";
+import { ByMonthlyResultDoc } from "./ByMonthlyResultDoc";
 
 // 毎月の返済額から借入可能額を求める
 export const BorrowableSimulatorByMonthy: React.FC = () => {
   const [simulateResult, setSimulateResult] = useState<
-    BorrowableByMonthlyResult | undefined
+    (BorrowableByMonthlyResult & BorrowableByMonthlyFormData) | undefined
   >(undefined);
 
   const {
     register,
     handleSubmit: buildSubmitHandler,
     formState: { errors },
+    getValues,
   } = useForm<BorrowableByMonthlyFormData>({
     resolver: zodResolver(borrowableByMonthlySchema),
   });
@@ -29,7 +32,22 @@ export const BorrowableSimulatorByMonthy: React.FC = () => {
   const handleSubmit: SubmitHandler<BorrowableByMonthlyFormData> = (
     formData
   ) => {
-    setSimulateResult(simulateBorrowableByMonthly(formData));
+    const result = simulateBorrowableByMonthly(formData);
+    setSimulateResult({ ...result, ...getValues() });
+  };
+
+  const resultForDownloadId = useId();
+  const handleDownload = async () => {
+    const element = document.getElementById(resultForDownloadId);
+    if (!element) {
+      return;
+    }
+
+    const imgUrl = await toPng(element);
+    const a = document.createElement("a");
+    a.href = imgUrl;
+    a.download = "result.png";
+    a.click();
   };
 
   return (
@@ -62,7 +80,18 @@ export const BorrowableSimulatorByMonthy: React.FC = () => {
         </>
       }
       result={
-        <SimulatorResult isShown={simulateResult !== undefined}>
+        <SimulatorResult
+          isShown={simulateResult !== undefined}
+          resultForDownload={
+            simulateResult && (
+              <ByMonthlyResultDoc
+                id={resultForDownloadId}
+                result={simulateResult}
+              />
+            )
+          }
+          onDownload={handleDownload}
+        >
           <MainResultCard
             title="借入可能額"
             result={simulateResult?.borrowableAmount}
