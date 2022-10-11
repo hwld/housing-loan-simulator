@@ -1,8 +1,8 @@
 import { MainResultCard } from "../result/MainResultCard";
-import { SimulatorInput } from "../SimulatorInput";
-import { SimulatorLayout } from "../SimulatorLayout";
 import { SimulatorResult } from "../result/SimulatorResult";
 import { SubResultCard } from "../result/SubResultCard";
+import { SimulatorInput } from "../SimulatorInput";
+import { SimulatorLayout } from "../SimulatorLayout";
 import { useDownloadElement } from "../useDownloadResult";
 import { ResultDoc } from "./ResultDoc";
 import { useSimulator } from "./useSimulator";
@@ -14,7 +14,7 @@ export const Simulator: React.FC = () => {
     simulationsInputs: { register, errors },
   } = useSimulator();
 
-  const { downloadId, handleDownload } = useDownloadElement();
+  const { downloadId, handleDownload, downloading } = useDownloadElement();
 
   return (
     <div>
@@ -55,6 +55,7 @@ export const Simulator: React.FC = () => {
               )
             }
             onDownload={handleDownload}
+            downloading={downloading}
           >
             <MainResultCard
               title="月々の返済額"

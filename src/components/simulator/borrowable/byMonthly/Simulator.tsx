@@ -1,8 +1,8 @@
 import React from "react";
 import { MainResultCard } from "../../result/MainResultCard";
+import { SimulatorResult } from "../../result/SimulatorResult";
 import { SimulatorInput } from "../../SimulatorInput";
 import { SimulatorLayout } from "../../SimulatorLayout";
-import { SimulatorResult } from "../../result/SimulatorResult";
 import { useDownloadElement } from "../../useDownloadResult";
 import { ResultDoc } from "./ResultDoc";
 import { useSimulator } from "./useSimulator";
@@ -14,7 +14,7 @@ export const Simulator: React.FC = () => {
     simulationResult,
     simulationInputs: { register, errors },
   } = useSimulator();
-  const { downloadId, handleDownload } = useDownloadElement();
+  const { downloadId, handleDownload, downloading } = useDownloadElement();
 
   return (
     <SimulatorLayout
@@ -54,6 +54,7 @@ export const Simulator: React.FC = () => {
             )
           }
           onDownload={handleDownload}
+          downloading={downloading}
         >
           <MainResultCard
             title="借入可能額"

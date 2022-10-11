@@ -1,3 +1,4 @@
+import * as Toast from "@radix-ui/react-toast";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
 import { FaDownload, FaInfoCircle } from "react-icons/fa";
@@ -8,12 +9,14 @@ type Props = {
   children: ReactNode;
   isShown?: boolean;
   onDownload: () => {};
+  downloading?: boolean;
   resultForDownload: ReactNode;
 };
 export const SimulatorResult: React.FC<Props> = ({
   children,
   isShown = false,
   onDownload,
+  downloading = false,
   resultForDownload,
 }) => {
   return (
@@ -62,6 +65,39 @@ export const SimulatorResult: React.FC<Props> = ({
       </div>
       {/*　画像にする要素 */}
       <div className="fixed top-full">{resultForDownload}</div>
+      <Toast.Provider>
+        <AnimatePresence>
+          {downloading && (
+            <Toast.Root
+              className="bg-gray-100 shadow rounded border-red-500 border"
+              asChild
+              forceMount
+            >
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Toast.Description className="flex items-center space-x-3 px-3 py-2">
+                  <div className="flex justify-center">
+                    <div className="animate-spin h-7 w-7 border-4 border-red-500 rounded-full border-t-transparent"></div>
+                  </div>
+                  <div>
+                    <p className="text-gray-600 text-sm font-bold">
+                      結果の画像を生成しています
+                    </p>
+                    <p className="text-[0.8rem] text-gray-500">
+                      しばらくお待ち下さい
+                    </p>
+                  </div>
+                </Toast.Description>
+              </motion.div>
+            </Toast.Root>
+          )}
+        </AnimatePresence>
+
+        <Toast.Viewport className="fixed bottom-4 right-4" />
+      </Toast.Provider>
     </>
   );
 };
