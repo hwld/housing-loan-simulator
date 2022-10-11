@@ -2,15 +2,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  BorrowableByIncomeFormData,
-  borrowableByIncomeSchema,
-  BorrowableByIncomeSnapshot,
-  simulateBorrowableByIncome,
-} from "../../../../models/simulator/borrowable/income";
+  RepaymentFormData,
+  repaymentSchema,
+  RepaymentSnapshot,
+  simulateRepayment,
+} from "../../../models/simulator/repayment";
 
-export const useBorrowableSimulatorByIncome = () => {
+export const useSimulator = () => {
   const [simulationResult, setSimulationResult] = useState<
-    BorrowableByIncomeSnapshot | undefined
+    RepaymentSnapshot | undefined
   >(undefined);
 
   const {
@@ -18,15 +18,11 @@ export const useBorrowableSimulatorByIncome = () => {
     handleSubmit: buildSubmitHandler,
     formState: { errors },
     getValues,
-  } = useForm<BorrowableByIncomeFormData>({
-    resolver: zodResolver(borrowableByIncomeSchema),
-  });
+  } = useForm<RepaymentFormData>({ resolver: zodResolver(repaymentSchema) });
 
   const simulate = useMemo(() => {
-    const handleSubmit: SubmitHandler<BorrowableByIncomeFormData> = (
-      formData
-    ) => {
-      const result = simulateBorrowableByIncome(formData);
+    const handleSubmit: SubmitHandler<RepaymentFormData> = (formData) => {
+      const result = simulateRepayment(formData);
       setSimulationResult({ ...result, ...getValues() });
     };
 
@@ -36,6 +32,6 @@ export const useBorrowableSimulatorByIncome = () => {
   return {
     simulate,
     simulationResult,
-    simulationInputs: { register, errors },
+    simulationsInputs: { errors, register },
   };
 };

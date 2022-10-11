@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
 import { FaAngleDown } from "react-icons/fa";
-import { clsx } from "../../classnames";
+import { clsx } from "../../../classnames";
 
 type Props = {
   headIcon: ElementType;

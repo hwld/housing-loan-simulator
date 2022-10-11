@@ -1,11 +1,11 @@
 import { NextPage } from "next";
-import { RepaymentSimulator } from "../src/components/simulator/repayment/RepaymentSimulator";
+import { Simulator } from "../src/components/simulator/repayment/Simulator";
 import { Layout } from "../src/components/ui/Layout";
 
 const Repayment: NextPage = () => {
   return (
     <Layout currentPage="/repayment">
-      <RepaymentSimulator />
+      <Simulator />
     </Layout>
   );
 };

@@ -1,12 +1,12 @@
 import { NextPage } from "next";
-import { BorrowableSimulatorByMonthy } from "../../src/components/simulator/borrowable/byMonthly/BorrowableSimulatorByMonthly";
+import { Simulator } from "../../src/components/simulator/borrowable/byMonthly/Simulator";
 import { Layout } from "../../src/components/ui/Layout";
 
 //
 const MonthlyRepayment: NextPage = () => {
   return (
     <Layout currentPage="/borrowable/monthly-repayment">
-      <BorrowableSimulatorByMonthy />
+      <Simulator />
     </Layout>
   );
 };

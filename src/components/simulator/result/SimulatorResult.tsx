@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
 import { FaDownload, FaInfoCircle } from "react-icons/fa";
-import { clsx } from "../../classnames";
-import { Tooltip } from "../ui/Tooltip";
+import { clsx } from "../../../classnames";
+import { Tooltip } from "../../ui/Tooltip";
 
 type Props = {
   children: ReactNode;

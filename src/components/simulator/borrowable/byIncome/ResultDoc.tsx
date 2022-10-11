@@ -2,9 +2,9 @@ import {
   BorrowableByIncomeFormData,
   BorrowableByIncomeResult,
 } from "../../../../models/simulator/borrowable/income";
-import { ResultDoc } from "../../resultDoc/ResultDoc";
 import { ResultDocCard } from "../../resultDoc/ResultDocCard";
 import { ResultDocInputCard } from "../../resultDoc/ResultDocInputCard";
+import { ResultDocLayout } from "../../resultDoc/ResultDocLayout";
 
 type Props = {
   result: BorrowableByIncomeResult & BorrowableByIncomeFormData;
@@ -15,12 +15,12 @@ const formatMoney = (value: number) => {
   return Math.round(value).toLocaleString();
 };
 
-export const ByIncomeResultDoc: React.FC<Props> = ({
+export const ResultDoc: React.FC<Props> = ({
   result: { borrowableAmount, annualIncome, annualInterest, yearsOfRepayment },
   id,
 }) => {
   return (
-    <ResultDoc
+    <ResultDocLayout
       id={id}
       results={
         <>

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Page, SideMenu } from "./SideMenu";
+import { Page, SideMenu } from "./sidemenu/SideMenu";
 
 type Props = { children: ReactNode; currentPage: Page };
 export const Layout: React.FC<Props> = ({ children, currentPage }) => {

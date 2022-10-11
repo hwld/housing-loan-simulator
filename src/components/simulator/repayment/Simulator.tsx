@@ -1,24 +1,24 @@
-import { MainResultCard } from "../MainResultCard";
-import { Simulator } from "../Simulator";
+import { MainResultCard } from "../result/MainResultCard";
 import { SimulatorInput } from "../SimulatorInput";
-import { SimulatorResult } from "../SimulatorResult";
-import { SubResultCard } from "../SubResultCard";
+import { SimulatorLayout } from "../SimulatorLayout";
+import { SimulatorResult } from "../result/SimulatorResult";
+import { SubResultCard } from "../result/SubResultCard";
 import { useDownloadElement } from "../useDownloadResult";
-import { RepaymentResultDoc } from "./RepaymentResultDoc";
-import { useRepaymentSimulator } from "./useRepaymentSimulator";
+import { ResultDoc } from "./ResultDoc";
+import { useSimulator } from "./useSimulator";
 
-export const RepaymentSimulator: React.FC = () => {
+export const Simulator: React.FC = () => {
   const {
     simulate,
     simulationResult,
     simulationsInputs: { register, errors },
-  } = useRepaymentSimulator();
+  } = useSimulator();
 
   const { downloadId, handleDownload } = useDownloadElement();
 
   return (
     <div>
-      <Simulator
+      <SimulatorLayout
         onSimulate={simulate}
         title="月々の返済額を求める"
         inputs={
@@ -51,7 +51,7 @@ export const RepaymentSimulator: React.FC = () => {
             isShown={simulationResult !== undefined}
             resultForDownload={
               simulationResult && (
-                <RepaymentResultDoc id={downloadId} result={simulationResult} />
+                <ResultDoc id={downloadId} result={simulationResult} />
               )
             }
             onDownload={handleDownload}

@@ -1,33 +1,31 @@
-import React from "react";
-import { MainResultCard } from "../../MainResultCard";
-import { Simulator } from "../../Simulator";
+import { MainResultCard } from "../../result/MainResultCard";
 import { SimulatorInput } from "../../SimulatorInput";
-import { SimulatorResult } from "../../SimulatorResult";
+import { SimulatorLayout } from "../../SimulatorLayout";
+import { SimulatorResult } from "../../result/SimulatorResult";
 import { useDownloadElement } from "../../useDownloadResult";
-import { ByMonthlyResultDoc } from "./ByMonthlyResultDoc";
-import { useBorrowableSimulatorByMonthly } from "./useBorrowableSimulatorByMonthly";
+import { ResultDoc } from "./ResultDoc";
+import { useSimulator } from "./useSimulator";
 
-// 毎月の返済額から借入可能額を求める
-export const BorrowableSimulatorByMonthy: React.FC = () => {
+export const Simulator: React.FC = () => {
   const {
     simulate,
     simulationResult,
     simulationInputs: { register, errors },
-  } = useBorrowableSimulatorByMonthly();
+  } = useSimulator();
   const { downloadId, handleDownload } = useDownloadElement();
 
   return (
-    <Simulator
+    <SimulatorLayout
       onSimulate={simulate}
-      title="借入可能額を求める (月々の支払額から)"
+      title="借入可能額を求める (年収から)"
       inputs={
         <>
           <SimulatorInput
-            label="月々の支払額"
-            placeholder="10"
+            label="年収"
+            placeholder="400"
             unit="万円"
-            error={errors.monthlyRepayment}
-            {...register("monthlyRepayment", { valueAsNumber: true })}
+            error={errors.annualIncome}
+            {...register("annualIncome", { valueAsNumber: true })}
           />
           <SimulatorInput
             label="年利"
@@ -50,7 +48,7 @@ export const BorrowableSimulatorByMonthy: React.FC = () => {
           isShown={simulationResult !== undefined}
           resultForDownload={
             simulationResult && (
-              <ByMonthlyResultDoc id={downloadId} result={simulationResult} />
+              <ResultDoc id={downloadId} result={simulationResult} />
             )
           }
           onDownload={handleDownload}
@@ -61,6 +59,6 @@ export const BorrowableSimulatorByMonthy: React.FC = () => {
           />
         </SimulatorResult>
       }
-    ></Simulator>
+    />
   );
 };

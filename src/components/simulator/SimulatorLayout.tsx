@@ -7,7 +7,7 @@ type Props = {
   result: ReactNode;
   onSimulate: FormEventHandler<HTMLFormElement>;
 };
-export const Simulator: React.FC<Props> = ({
+export const SimulatorLayout: React.FC<Props> = ({
   title,
   inputs,
   result,

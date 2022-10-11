@@ -2,9 +2,9 @@ import {
   RepaymentFormData,
   RepaymentResult,
 } from "../../../models/simulator/repayment";
-import { ResultDoc } from "../resultDoc/ResultDoc";
 import { ResultDocCard } from "../resultDoc/ResultDocCard";
 import { ResultDocInputCard } from "../resultDoc/ResultDocInputCard";
+import { ResultDocLayout } from "../resultDoc/ResultDocLayout";
 
 type Props = { result: RepaymentResult & RepaymentFormData; id: string };
 
@@ -12,7 +12,7 @@ const formatMoney = (value: number) => {
   return Math.round(value).toLocaleString();
 };
 
-export const RepaymentResultDoc: React.FC<Props> = ({
+export const ResultDoc: React.FC<Props> = ({
   result: {
     monthlyRepaymentAmount,
     totalRepaymentAmount,
@@ -24,7 +24,7 @@ export const RepaymentResultDoc: React.FC<Props> = ({
   id,
 }) => {
   return (
-    <ResultDoc
+    <ResultDocLayout
       id={id}
       results={
         <>

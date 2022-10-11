@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 type Props = { id: string; results: ReactNode; inputs: ReactNode };
-export const ResultDoc: React.FC<Props> = ({ id, results, inputs }) => {
+export const ResultDocLayout: React.FC<Props> = ({ id, results, inputs }) => {
   return (
     <div id={id} className="p-3 rounded-lg bg-gray-100 shadow w-[800px]">
       <h1 className="text-2xl font-bold">シミュレーション結果</h1>
