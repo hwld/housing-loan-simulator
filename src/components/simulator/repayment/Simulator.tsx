@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from "react";
 import { MainResultCard } from "../result/MainResultCard";
 import { SimulatorResult } from "../result/SimulatorResult";
 import { SubResultCard } from "../result/SubResultCard";
@@ -13,6 +14,11 @@ export const Simulator: React.FC = () => {
     simulationResult,
     simulationsInputs: { register, errors },
   } = useSimulator();
+
+  const [remarks, setRemarks] = useState("");
+  const handleChangeRemarks = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setRemarks(e.target.value);
+  };
 
   const { downloadId, handleDownload, downloading } = useDownloadElement();
 
@@ -49,9 +55,13 @@ export const Simulator: React.FC = () => {
         result={
           <SimulatorResult
             isShown={simulationResult !== undefined}
-            resultForDownload={
+            resultDocForDownload={
               simulationResult && (
-                <ResultDoc id={downloadId} result={simulationResult} />
+                <ResultDoc
+                  id={downloadId}
+                  result={simulationResult}
+                  remarks={remarks}
+                />
               )
             }
             onDownload={handleDownload}
@@ -71,6 +81,8 @@ export const Simulator: React.FC = () => {
             />
           </SimulatorResult>
         }
+        remarks={remarks}
+        onChangeRemarks={handleChangeRemarks}
       />
     </div>
   );

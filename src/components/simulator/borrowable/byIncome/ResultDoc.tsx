@@ -8,6 +8,7 @@ import { ResultDocLayout } from "../../resultDoc/ResultDocLayout";
 
 type Props = {
   result: BorrowableByIncomeResult & BorrowableByIncomeFormData;
+  remarks: string;
   id: string;
 };
 
@@ -17,6 +18,7 @@ const formatMoney = (value: number) => {
 
 export const ResultDoc: React.FC<Props> = ({
   result: { borrowableAmount, annualIncome, annualInterest, yearsOfRepayment },
+  remarks,
   id,
 }) => {
   return (
@@ -40,6 +42,7 @@ export const ResultDoc: React.FC<Props> = ({
           />
         </>
       }
+      remarks={remarks}
     />
   );
 };

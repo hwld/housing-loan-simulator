@@ -1,16 +1,21 @@
-import { FormEventHandler, ReactNode } from "react";
+import { ChangeEventHandler, FormEventHandler, ReactNode } from "react";
 import { Button } from "../ui/Button";
+import { Textarea } from "../ui/Textarea";
 
 type Props = {
   title: string;
   inputs: ReactNode;
   result: ReactNode;
+  remarks: string;
+  onChangeRemarks: ChangeEventHandler<HTMLTextAreaElement>;
   onSimulate: FormEventHandler<HTMLFormElement>;
 };
 export const SimulatorLayout: React.FC<Props> = ({
   title,
   inputs,
   result,
+  remarks,
+  onChangeRemarks,
   onSimulate,
 }) => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -27,6 +32,10 @@ export const SimulatorLayout: React.FC<Props> = ({
           <Button>計算する</Button>
         </form>
         {result}
+      </div>
+      <div className="flex flex-col space-y-2">
+        <label>備考欄</label>
+        <Textarea rows={6} value={remarks} onChange={onChangeRemarks} />
       </div>
     </div>
   );

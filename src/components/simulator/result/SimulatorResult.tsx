@@ -10,14 +10,14 @@ type Props = {
   isShown?: boolean;
   onDownload: () => {};
   downloading?: boolean;
-  resultForDownload: ReactNode;
+  resultDocForDownload: ReactNode;
 };
 export const SimulatorResult: React.FC<Props> = ({
   children,
   isShown = false,
   onDownload,
   downloading = false,
-  resultForDownload,
+  resultDocForDownload,
 }) => {
   return (
     <>
@@ -63,8 +63,10 @@ export const SimulatorResult: React.FC<Props> = ({
           )}
         </AnimatePresence>
       </div>
-      {/*　画像にする要素 */}
-      <div className="fixed top-full">{resultForDownload}</div>
+      {/* 画像にする要素 */}
+      <div className="fixed top-full">{resultDocForDownload}</div>
+
+      {/* 画像の生成を知らせるインジゲータ */}
       <Toast.Provider>
         <AnimatePresence>
           {downloading && (

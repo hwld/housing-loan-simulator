@@ -6,7 +6,11 @@ import { ResultDocCard } from "../resultDoc/ResultDocCard";
 import { ResultDocInputCard } from "../resultDoc/ResultDocInputCard";
 import { ResultDocLayout } from "../resultDoc/ResultDocLayout";
 
-type Props = { result: RepaymentResult & RepaymentFormData; id: string };
+type Props = {
+  result: RepaymentResult & RepaymentFormData;
+  remarks: string;
+  id: string;
+};
 
 const formatMoney = (value: number) => {
   return Math.round(value).toLocaleString();
@@ -21,6 +25,7 @@ export const ResultDoc: React.FC<Props> = ({
     annualInterest,
     yearsOfRepayment,
   },
+  remarks,
   id,
 }) => {
   return (
@@ -56,6 +61,7 @@ export const ResultDoc: React.FC<Props> = ({
           />
         </>
       }
+      remarks={remarks}
     />
   );
 };
