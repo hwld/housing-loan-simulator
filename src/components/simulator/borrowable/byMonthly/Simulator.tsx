@@ -1,11 +1,15 @@
-import React, { ChangeEvent, useState } from "react";
+import React from "react";
+import {
+  borrowableByMonthlySchema,
+  simulateBorrowableByMonthly,
+} from "../../../../models/simulator/borrowable/monthlyRepayment";
 import { MainResultCard } from "../../result/MainResultCard";
 import { SimulatorResult } from "../../result/SimulatorResult";
 import { SimulatorInput } from "../../SimulatorInput";
 import { SimulatorLayout } from "../../SimulatorLayout";
 import { useDownloadElement } from "../../useDownloadResult";
+import { useSimulator } from "../../useSimulator";
 import { ResultDoc } from "./ResultDoc";
-import { useSimulator } from "./useSimulator";
 
 // 毎月の返済額から借入可能額を求める
 export const Simulator: React.FC = () => {
@@ -13,13 +17,11 @@ export const Simulator: React.FC = () => {
     simulate,
     simulationResult,
     simulationInputs: { register, errors },
-  } = useSimulator();
-  const { downloadId, handleDownload, downloading } = useDownloadElement();
+    remarks,
+    handleChangeRemarks,
+  } = useSimulator(simulateBorrowableByMonthly, borrowableByMonthlySchema);
 
-  const [remarks, setRemarks] = useState("");
-  const handleChangeRemarks = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setRemarks(e.target.value);
-  };
+  const { downloadId, handleDownload, downloading } = useDownloadElement();
 
   return (
     <SimulatorLayout

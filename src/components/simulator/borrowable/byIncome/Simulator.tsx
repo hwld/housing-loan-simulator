@@ -1,24 +1,25 @@
-import { ChangeEvent, useState } from "react";
+import {
+  borrowableByIncomeSchema,
+  simulateBorrowableByIncome,
+} from "../../../../models/simulator/borrowable/income";
 import { MainResultCard } from "../../result/MainResultCard";
 import { SimulatorResult } from "../../result/SimulatorResult";
 import { SimulatorInput } from "../../SimulatorInput";
 import { SimulatorLayout } from "../../SimulatorLayout";
 import { useDownloadElement } from "../../useDownloadResult";
+import { useSimulator } from "../../useSimulator";
 import { ResultDoc } from "./ResultDoc";
-import { useSimulator } from "./useSimulator";
 
 export const Simulator: React.FC = () => {
   const {
     simulate,
     simulationResult,
     simulationInputs: { register, errors },
-  } = useSimulator();
-  const { downloadId, handleDownload, downloading } = useDownloadElement();
+    remarks,
+    handleChangeRemarks,
+  } = useSimulator(simulateBorrowableByIncome, borrowableByIncomeSchema);
 
-  const [remarks, setRemarks] = useState("");
-  const handleChangeRemarks = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setRemarks(e.target.value);
-  };
+  const { downloadId, handleDownload, downloading } = useDownloadElement();
 
   return (
     <>

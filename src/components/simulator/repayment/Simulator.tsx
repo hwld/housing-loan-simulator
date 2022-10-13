@@ -1,24 +1,24 @@
-import { ChangeEvent, useState } from "react";
+import {
+  repaymentSchema,
+  simulateRepayment,
+} from "../../../models/simulator/repayment";
 import { MainResultCard } from "../result/MainResultCard";
 import { SimulatorResult } from "../result/SimulatorResult";
 import { SubResultCard } from "../result/SubResultCard";
 import { SimulatorInput } from "../SimulatorInput";
 import { SimulatorLayout } from "../SimulatorLayout";
 import { useDownloadElement } from "../useDownloadResult";
+import { useSimulator } from "../useSimulator";
 import { ResultDoc } from "./ResultDoc";
-import { useSimulator } from "./useSimulator";
 
 export const Simulator: React.FC = () => {
   const {
     simulate,
     simulationResult,
-    simulationsInputs: { register, errors },
-  } = useSimulator();
-
-  const [remarks, setRemarks] = useState("");
-  const handleChangeRemarks = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setRemarks(e.target.value);
-  };
+    simulationInputs: { register, errors },
+    remarks,
+    handleChangeRemarks,
+  } = useSimulator(simulateRepayment, repaymentSchema);
 
   const { downloadId, handleDownload, downloading } = useDownloadElement();
 
