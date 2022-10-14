@@ -24,18 +24,24 @@ export const SimulatorLayout: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg px-4 py-6 space-y-6 shadow-lg">
-      <h3 className="text-xl text-red-700 select-none">{title}</h3>
-      <div className="flex-grow grid grid-cols-2 gap-3">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className="flex flex-col space-y-1">{inputs}</div>
-          <Button>計算する</Button>
-        </form>
-        {result}
+    <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow-xl">
+      <div className="bg-red-700 rounded-t-lg px-4 py-6">
+        <h3 className="text-2xl text-gray-100 font-bold select-none">
+          {title}
+        </h3>
       </div>
-      <div className="flex flex-col space-y-2">
-        <label>備考欄</label>
-        <Textarea rows={6} value={remarks} onChange={onChangeRemarks} />
+      <div className="px-4 pb-6 space-y-6">
+        <div className="flex-grow grid grid-cols-2 gap-3">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="flex flex-col space-y-1">{inputs}</div>
+            <Button>計算する</Button>
+          </form>
+          {result}
+        </div>
+        <div className="flex flex-col space-y-2">
+          <label>備考欄</label>
+          <Textarea rows={6} value={remarks} onChange={onChangeRemarks} />
+        </div>
       </div>
     </div>
   );
