@@ -1,4 +1,12 @@
-import { ChangeEventHandler, FormEventHandler, ReactNode } from "react";
+import * as Accordion from "@radix-ui/react-accordion";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  ReactNode,
+  useState,
+} from "react";
+import { FaChevronDown } from "react-icons/fa";
 import { Button } from "../ui/Button";
 import { Textarea } from "../ui/Textarea";
 
@@ -23,6 +31,10 @@ export const SimulatorLayout: React.FC<Props> = ({
     onSimulate(e);
   };
 
+  const [accordionValue, setAccordionValue] = useState<string | undefined>(
+    undefined
+  );
+
   return (
     <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow-xl">
       <div className="bg-red-700 rounded-t-lg px-4 py-6">
@@ -30,7 +42,7 @@ export const SimulatorLayout: React.FC<Props> = ({
           {title}
         </h3>
       </div>
-      <div className="px-4 pb-6 space-y-6">
+      <div className="px-4 space-y-6">
         <div className="flex-grow grid grid-cols-2 gap-3">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-1">{inputs}</div>
@@ -38,10 +50,54 @@ export const SimulatorLayout: React.FC<Props> = ({
           </form>
           {result}
         </div>
-        <div className="flex flex-col space-y-2">
-          <label>備考欄</label>
-          <Textarea rows={6} value={remarks} onChange={onChangeRemarks} />
-        </div>
+      </div>
+      <div>
+        <Accordion.Root
+          type="single"
+          collapsible
+          value={accordionValue}
+          onValueChange={(e) => setAccordionValue(e)}
+        >
+          <Accordion.Item value="remarks">
+            <Accordion.Header className="bg-gray-200 hover:bg-gray-300 rounded-b-lg data-state-open:rounded-none transition-all">
+              <Accordion.Trigger className="px-4 py-3 flex justify-between items-center space-x-3 cursor-pointer w-full">
+                <div>備考欄</div>
+                <FaChevronDown />
+              </Accordion.Trigger>
+            </Accordion.Header>
+            <AnimatePresence>
+              {accordionValue === "remarks" && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{
+                    height: "auto",
+                    opacity: 1,
+                    transition: {
+                      height: { type: "spring", duration: 0.3 },
+                      opacity: { duration: 0.4 },
+                    },
+                  }}
+                  exit={{
+                    height: 0,
+                    opacity: 0,
+                    transition: {
+                      height: { duration: 0.2 },
+                      opacity: { duration: 0.1 },
+                    },
+                  }}
+                >
+                  <Accordion.Content className="px-4 py-3" forceMount>
+                    <Textarea
+                      rows={6}
+                      value={remarks}
+                      onChange={onChangeRemarks}
+                    />
+                  </Accordion.Content>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Accordion.Item>
+        </Accordion.Root>
       </div>
     </div>
   );
