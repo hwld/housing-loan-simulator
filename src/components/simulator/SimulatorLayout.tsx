@@ -1,14 +1,7 @@
-import * as Accordion from "@radix-ui/react-accordion";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  ReactNode,
-  useState,
-} from "react";
-import { FaChevronDown } from "react-icons/fa";
+import { ChangeEventHandler, FormEventHandler, ReactNode } from "react";
 import { Button } from "../ui/Button";
 import { Textarea } from "../ui/Textarea";
+import { SimulatorAccordion } from "./SimulatorAccordion";
 
 type Props = {
   title: string;
@@ -31,10 +24,6 @@ export const SimulatorLayout: React.FC<Props> = ({
     onSimulate(e);
   };
 
-  const [accordionValue, setAccordionValue] = useState<string | undefined>(
-    undefined
-  );
-
   return (
     <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow-xl">
       <div className="bg-red-700 rounded-t-lg px-4 py-6">
@@ -51,54 +40,9 @@ export const SimulatorLayout: React.FC<Props> = ({
           {result}
         </div>
       </div>
-      <div>
-        <Accordion.Root
-          type="single"
-          collapsible
-          value={accordionValue}
-          onValueChange={(e) => setAccordionValue(e)}
-        >
-          <Accordion.Item value="remarks">
-            <Accordion.Header className="bg-gray-200 hover:bg-gray-300 rounded-b-lg data-state-open:rounded-none transition-all">
-              <Accordion.Trigger className="px-4 py-3 flex justify-between items-center space-x-3 cursor-pointer w-full">
-                <div>備考欄</div>
-                <FaChevronDown />
-              </Accordion.Trigger>
-            </Accordion.Header>
-            <AnimatePresence>
-              {accordionValue === "remarks" && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{
-                    height: "auto",
-                    opacity: 1,
-                    transition: {
-                      height: { type: "spring", duration: 0.3 },
-                      opacity: { duration: 0.4 },
-                    },
-                  }}
-                  exit={{
-                    height: 0,
-                    opacity: 0,
-                    transition: {
-                      height: { duration: 0.2 },
-                      opacity: { duration: 0.1 },
-                    },
-                  }}
-                >
-                  <Accordion.Content className="px-4 py-3" forceMount>
-                    <Textarea
-                      rows={6}
-                      value={remarks}
-                      onChange={onChangeRemarks}
-                    />
-                  </Accordion.Content>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </Accordion.Item>
-        </Accordion.Root>
-      </div>
+      <SimulatorAccordion title="備考欄">
+        <Textarea rows={6} value={remarks} onChange={onChangeRemarks} />
+      </SimulatorAccordion>
     </div>
   );
 };
