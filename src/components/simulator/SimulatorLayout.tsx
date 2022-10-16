@@ -25,8 +25,8 @@ export const SimulatorLayout: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow-xl">
-      <div className="bg-red-700 rounded-t-lg px-4 py-6">
+    <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow">
+      <div className="bg-red-700 rounded-t-lg p-4">
         <h3 className="text-2xl text-gray-100 font-bold select-none">
           {title}
         </h3>
@@ -41,7 +41,12 @@ export const SimulatorLayout: React.FC<Props> = ({
         </div>
       </div>
       <SimulatorAccordion title="備考欄">
-        <Textarea rows={6} value={remarks} onChange={onChangeRemarks} />
+        <Textarea
+          rows={6}
+          value={remarks}
+          onChange={onChangeRemarks}
+          resize={false}
+        />
       </SimulatorAccordion>
     </div>
   );
