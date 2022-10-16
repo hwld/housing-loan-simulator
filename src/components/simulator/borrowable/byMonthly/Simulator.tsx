@@ -1,26 +1,33 @@
 import React from "react";
 import {
-  borrowableByMonthlySchema,
-  simulateBorrowableByMonthly,
+  BorrowableByMonthlyFormData,
+  BorrowableByMonthlyResult,
 } from "../../../../models/simulator/borrowable/monthlyRepayment";
 import { MainResultCard } from "../../result/MainResultCard";
 import { SimulatorResult } from "../../result/SimulatorResult";
 import { SimulatorInput } from "../../SimulatorInput";
 import { SimulatorLayout } from "../../SimulatorLayout";
 import { useDownloadElement } from "../../useDownloadResult";
-import { useSimulator } from "../../useSimulator";
+import { SimulatorProps } from "../../useSimulator";
 import { ResultDoc } from "./ResultDoc";
 
+type Props = {
+  simulator: SimulatorProps<
+    BorrowableByMonthlyFormData,
+    BorrowableByMonthlyResult
+  >;
+};
+
 // 毎月の返済額から借入可能額を求める
-export const Simulator: React.FC = () => {
-  const {
+export const Simulator: React.FC<Props> = ({
+  simulator: {
     simulate,
     simulationResult,
     simulationInputs: { register, errors },
     remarks,
     handleChangeRemarks,
-  } = useSimulator(simulateBorrowableByMonthly, borrowableByMonthlySchema);
-
+  },
+}) => {
   const { downloadId, handleDownload, downloading } = useDownloadElement();
 
   return (

@@ -25,7 +25,7 @@ export const SimulatorLayout: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow">
+    <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow h-fit">
       <div className="bg-red-700 rounded-t-lg p-4">
         <h3 className="text-2xl text-gray-100 font-bold select-none">
           {title}
