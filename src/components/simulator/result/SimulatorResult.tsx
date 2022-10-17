@@ -37,7 +37,7 @@ export const SimulatorResult: React.FC<Props> = ({
                 <Tooltip
                   trigger={
                     <button
-                      className="border border-red-600 hover:bg-red-500/10 transition-all  p-2 rounded-full"
+                      className="border border-red-600 hover:bg-red-500/10 transition-all  p-2 rounded-full shadow"
                       onClick={onDownload}
                     >
                       <FaDownload className="fill-red-600"></FaDownload>

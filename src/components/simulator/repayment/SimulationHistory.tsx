@@ -6,16 +6,21 @@ import { SimulationHistoryItem } from "../history/SimulationHistoryItem";
 import { SimulationHistoryLayout } from "../history/SimulationHistoryLayout";
 
 type Props = {
-  history: (RepaymentFormData & RepaymentResult)[];
+  history: (RepaymentFormData & RepaymentResult & { id: string })[];
   onRemoveHistory: (index: number) => void;
+  onRemoveAllHistories: () => void;
 };
 
 export const SimulatorHistory: React.FC<Props> = ({
   history,
   onRemoveHistory,
+  onRemoveAllHistories,
 }) => {
   return (
-    <SimulationHistoryLayout>
+    <SimulationHistoryLayout
+      onRemoveAll={onRemoveAllHistories}
+      disabledRemove={history.length === 0}
+    >
       {history.map((h, i) => {
         const mainResult = {
           title: "月々の返済額",
@@ -38,7 +43,7 @@ export const SimulatorHistory: React.FC<Props> = ({
 
         return (
           <SimulationHistoryItem
-            key={i}
+            key={h.id}
             onRemove={() => onRemoveHistory(i)}
             mainResult={mainResult}
             subResults={subResults}

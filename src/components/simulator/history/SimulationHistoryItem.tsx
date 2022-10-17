@@ -17,11 +17,7 @@ export const SimulationHistoryItem: React.FC<Props> = ({
   onRemove,
 }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <motion.div exit={{ opacity: 0 }} layout>
       <div className="relative p-4 bg-gray-200 rounded-lg">
         <button onClick={onRemove} className="absolute top-3 right-3">
           <IoMdClose className="w-6 h-6" />

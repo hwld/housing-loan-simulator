@@ -6,15 +6,21 @@ import { SimulationHistoryItem } from "../../history/SimulationHistoryItem";
 import { SimulationHistoryLayout } from "../../history/SimulationHistoryLayout";
 
 type Props = {
-  history: (BorrowableByMonthlyFormData & BorrowableByMonthlyResult)[];
+  history: (BorrowableByMonthlyFormData &
+    BorrowableByMonthlyResult & { id: string })[];
   onRemoveHistory: (index: number) => void;
+  onRemoveAllHistories: () => void;
 };
 export const SimulatorHistory: React.FC<Props> = ({
   history,
   onRemoveHistory,
+  onRemoveAllHistories,
 }) => {
   return (
-    <SimulationHistoryLayout>
+    <SimulationHistoryLayout
+      onRemoveAll={onRemoveAllHistories}
+      disabledRemove={history.length === 0}
+    >
       {history.map((h, i) => {
         const mainResult = {
           title: "借入可能額",
@@ -29,7 +35,7 @@ export const SimulatorHistory: React.FC<Props> = ({
 
         return (
           <SimulationHistoryItem
-            key={i}
+            key={h.id}
             onRemove={() => onRemoveHistory(i)}
             mainResult={mainResult}
             inputs={inputs}
