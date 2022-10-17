@@ -26,6 +26,7 @@ export type SimulatorProps<FormData extends FieldValues, Result> = {
 type UseSimulatorResult<FormData extends FieldValues, Result> = {
   simulator: SimulatorProps<FormData, Result>;
   simulationHistory: (FormData & Result)[];
+  removeHistory: (index: number) => void;
 };
 
 export const useSimulator = <
@@ -71,6 +72,18 @@ export const useSimulator = <
     return buildSubmitHandler(handleSubmit);
   }, [buildSubmitHandler, getValues, innerSimulate]);
 
+  const removeHistory = (index: number) => {
+    if (index < 0 && index >= simulationHistory.length) {
+      return;
+    }
+
+    setSimulationHistory((history) => {
+      return history.filter((_, i) => {
+        return i !== index;
+      });
+    });
+  };
+
   return {
     simulator: {
       simulate,
@@ -80,5 +93,6 @@ export const useSimulator = <
       handleChangeRemarks,
     },
     simulationHistory,
+    removeHistory,
   };
 };

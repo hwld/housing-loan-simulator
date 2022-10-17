@@ -10,7 +10,7 @@ import {
 
 //
 const MonthlyRepayment: NextPage = () => {
-  const { simulator, simulationHistory } = useSimulator(
+  const { simulator, simulationHistory, removeHistory } = useSimulator(
     simulateBorrowableByMonthly,
     borrowableByMonthlySchema
   );
@@ -18,7 +18,10 @@ const MonthlyRepayment: NextPage = () => {
   return (
     <Layout currentPage="/borrowable/monthly-repayment">
       <Simulator simulator={simulator} />
-      <SimulatorHistory history={simulationHistory} />
+      <SimulatorHistory
+        history={simulationHistory}
+        onRemoveHistory={removeHistory}
+      />
     </Layout>
   );
 };

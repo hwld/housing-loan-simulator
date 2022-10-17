@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import { ReactNode } from "react";
 import { FaHistory } from "react-icons/fa";
 
@@ -9,7 +10,9 @@ export const SimulationHistoryLayout: React.FC<Props> = ({ children }) => {
         <FaHistory className="text-2xl" />
         <h3 className="text-2xl font-bold">シミュレーション履歴</h3>
       </div>
-      <div className="space-y-3 grow overflow-auto p-3">{children}</div>
+      <div className="space-y-3 grow overflow-auto p-3">
+        <AnimatePresence>{children}</AnimatePresence>
+      </div>
     </div>
   );
 };

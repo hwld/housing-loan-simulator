@@ -7,8 +7,12 @@ import { SimulationHistoryLayout } from "../../history/SimulationHistoryLayout";
 
 type Props = {
   history: (BorrowableByIncomeFormData & BorrowableByIncomeResult)[];
+  onRemoveHistory: (i: number) => void;
 };
-export const SimulatorHistory: React.FC<Props> = ({ history }) => {
+export const SimulatorHistory: React.FC<Props> = ({
+  history,
+  onRemoveHistory,
+}) => {
   return (
     <SimulationHistoryLayout>
       {history.map((h, i) => {
@@ -26,6 +30,7 @@ export const SimulatorHistory: React.FC<Props> = ({ history }) => {
         return (
           <SimulationHistoryItem
             key={i}
+            onRemove={() => onRemoveHistory(i)}
             mainResult={mainResult}
             inputs={inputs}
             remarks={""}

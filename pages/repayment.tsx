@@ -9,7 +9,7 @@ import {
 } from "../src/models/simulator/repayment";
 
 const Repayment: NextPage = () => {
-  const { simulator, simulationHistory } = useSimulator(
+  const { simulator, simulationHistory, removeHistory } = useSimulator(
     simulateRepayment,
     repaymentSchema
   );
@@ -17,7 +17,10 @@ const Repayment: NextPage = () => {
   return (
     <Layout currentPage="/repayment">
       <Simulator simulator={simulator} />
-      <SimulatorHistory history={simulationHistory} />
+      <SimulatorHistory
+        history={simulationHistory}
+        onRemoveHistory={removeHistory}
+      />
     </Layout>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from "../../src/models/simulator/borrowable/income";
 
 const Income: NextPage = () => {
-  const { simulator, simulationHistory } = useSimulator(
+  const { simulator, simulationHistory, removeHistory } = useSimulator(
     simulateBorrowableByIncome,
     borrowableByIncomeSchema
   );
@@ -17,7 +17,10 @@ const Income: NextPage = () => {
   return (
     <Layout currentPage="/borrowable/income">
       <Simulator simulator={simulator} />
-      <SimulatorHistory history={simulationHistory} />
+      <SimulatorHistory
+        history={simulationHistory}
+        onRemoveHistory={removeHistory}
+      />
     </Layout>
   );
 };
