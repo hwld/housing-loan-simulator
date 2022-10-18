@@ -7,7 +7,7 @@ import { SimulationHistoryLayout } from "../../history/SimulationHistoryLayout";
 
 type Props = {
   history: (BorrowableByIncomeFormData &
-    BorrowableByIncomeResult & { id: string })[];
+    BorrowableByIncomeResult & { id: string; remarks: string })[];
   onRemoveHistory: (i: number) => void;
   onRemoveAllHistories: () => void;
 };
@@ -39,7 +39,7 @@ export const SimulatorHistory: React.FC<Props> = ({
             onRemove={() => onRemoveHistory(i)}
             mainResult={mainResult}
             inputs={inputs}
-            remarks={""}
+            remarks={h.remarks}
           />
         );
       })}

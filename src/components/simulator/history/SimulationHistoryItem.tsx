@@ -17,7 +17,12 @@ export const SimulationHistoryItem: React.FC<Props> = ({
   onRemove,
 }) => {
   return (
-    <motion.div exit={{ opacity: 0 }} layout>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      layout
+    >
       <div className="relative p-4 bg-gray-200 rounded-lg">
         <button onClick={onRemove} className="absolute top-3 right-3">
           <IoMdClose className="w-6 h-6" />
@@ -28,7 +33,7 @@ export const SimulationHistoryItem: React.FC<Props> = ({
             return (
               <div key={i} className="space-x-1">
                 <span className="text-sm text-gray-500">{input.title}:</span>
-                <span className="text-sm font-bold">{input.value}</span>
+                <span className="text-sm">{input.value}</span>
               </div>
             );
           })}
@@ -38,14 +43,14 @@ export const SimulationHistoryItem: React.FC<Props> = ({
           <div>
             <div>
               <div>{mainResult.title}</div>
-              <div className="ml-3 text-lg font-bold">{mainResult.value}</div>
+              <div className="ml-3 text-2xl font-bold">{mainResult.value}</div>
             </div>
-            <div className="ml-1">
+            <div className="ml-1 mt-2">
               {subResults.map((result, i) => {
                 return (
                   <div key={i}>
                     <div className="text-sm text-gray-500">{result.title}</div>
-                    <div className="ml-3 font-bold">{result.value}</div>
+                    <div className="ml-3">{result.value}</div>
                   </div>
                 );
               })}

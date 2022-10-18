@@ -6,7 +6,8 @@ import { SimulationHistoryItem } from "../history/SimulationHistoryItem";
 import { SimulationHistoryLayout } from "../history/SimulationHistoryLayout";
 
 type Props = {
-  history: (RepaymentFormData & RepaymentResult & { id: string })[];
+  history: (RepaymentFormData &
+    RepaymentResult & { id: string; remarks: string })[];
   onRemoveHistory: (index: number) => void;
   onRemoveAllHistories: () => void;
 };
@@ -48,7 +49,7 @@ export const SimulatorHistory: React.FC<Props> = ({
             mainResult={mainResult}
             subResults={subResults}
             inputs={inputs}
-            remarks={""}
+            remarks={h.remarks}
           />
         );
       })}

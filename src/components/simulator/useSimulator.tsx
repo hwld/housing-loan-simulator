@@ -25,7 +25,7 @@ export type SimulatorProps<FormData extends FieldValues, Result> = {
 
 type UseSimulatorResult<FormData extends FieldValues, Result> = {
   simulator: SimulatorProps<FormData, Result>;
-  simulationHistory: (FormData & Result & { id: string })[];
+  simulationHistory: (FormData & Result & { id: string; remarks: string })[];
   removeHistory: (index: number) => void;
   removeAllHistories: () => void;
 };
@@ -42,7 +42,7 @@ export const useSimulator = <
   >(undefined);
 
   const [simulationHistory, setSimulationHistory] = useState<
-    (SimulatorFormData & SimulatorResult & { id: string })[]
+    (SimulatorFormData & SimulatorResult & { id: string; remarks: string })[]
   >([]);
 
   const [remarks, setRemarks] = useState("");
@@ -66,12 +66,15 @@ export const useSimulator = <
       setSimulationResult(history);
 
       setSimulationHistory((histories) => {
-        return [{ ...history, id: Math.random().toString() }, ...histories];
+        return [
+          { ...history, id: Math.random().toString(), remarks },
+          ...histories,
+        ];
       });
     };
 
     return buildSubmitHandler(handleSubmit);
-  }, [buildSubmitHandler, getValues, innerSimulate]);
+  }, [buildSubmitHandler, getValues, innerSimulate, remarks]);
 
   const removeHistory = (index: number) => {
     if (index < 0 && index >= simulationHistory.length) {

@@ -15,7 +15,7 @@ export const SimulationHistoryLayout: React.FC<Props> = ({
   disabledRemove = false,
 }) => {
   return (
-    <div className="bg-gray-100 grow flex flex-col shadow rounded-lg">
+    <div className="bg-gray-100 grow flex flex-col shadow rounded-lg max-w-[600px]">
       <div className="flex items-center justify-between space-x-2 p-4">
         <h3 className="text-2xl font-bold">シミュレーション履歴</h3>
         <Tooltip

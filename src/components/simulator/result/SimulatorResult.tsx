@@ -98,7 +98,7 @@ export const SimulatorResult: React.FC<Props> = ({
           )}
         </AnimatePresence>
 
-        <Toast.Viewport className="fixed bottom-4 right-4" />
+        <Toast.Viewport className="z-50 fixed bottom-4 right-4" />
       </Toast.Provider>
     </>
   );
