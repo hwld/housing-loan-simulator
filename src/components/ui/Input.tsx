@@ -13,7 +13,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref}
         className={clsx(
-          "w-full border p-2 rounded-md transition-all outline-none",
+          "w-full border p-1 rounded-md transition-all outline-none",
           textRight && "text-right",
           isError
             ? "border-red-400 focus:ring-red-400 focus:ring focus:ring-offset-2"

@@ -16,7 +16,7 @@ export const SimulatorInput: React.FC<Props> = forwardRef<
     <div>
       <label htmlFor={inputId}>{label}</label>
       <div className="mt-2 grid grid-cols-8 items-center">
-        <div className="col-span-7">
+        <div className="col-span-6">
           <Input
             ref={ref}
             textRight
@@ -26,11 +26,11 @@ export const SimulatorInput: React.FC<Props> = forwardRef<
             {...props}
           />
         </div>
-        <p className="ml-2">{unit}</p>
+        <p className="ml-2 col-span-2">{unit}</p>
       </div>
-      <div className="h-5 mt-1">
-        <p className="ml-1 text-sm text-red-400">{error?.message}</p>
-      </div>
+      {error && (
+        <p className="ml-2 mt-1 text-sm text-red-400">{error?.message}</p>
+      )}
     </div>
   );
 });

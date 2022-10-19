@@ -15,9 +15,12 @@ export const SimulationHistoryLayout: React.FC<Props> = ({
   disabledRemove = false,
 }) => {
   return (
-    <div className="bg-gray-100 grow flex flex-col shadow rounded-lg max-w-[600px]">
-      <div className="flex items-center justify-between space-x-2 p-4">
-        <h3 className="text-2xl font-bold">シミュレーション履歴</h3>
+    <div className="bg-gray-100 flex flex-col shadow rounded-lg w-[700px] shrink-0">
+      <div className="flex items-start justify-between space-x-2 pt-4 px-4">
+        <div>
+          <h3 className="text-2xl font-bold">シミュレーション履歴</h3>
+          <div className="h-2 my-3 w-1/4 bg-red-700 rounded-full"></div>
+        </div>
         <Tooltip
           trigger={
             <button
@@ -35,7 +38,10 @@ export const SimulationHistoryLayout: React.FC<Props> = ({
           すべての履歴を削除する。
         </Tooltip>
       </div>
-      <motion.div layoutScroll className="space-y-3 grow overflow-auto p-3">
+      <motion.div
+        layoutScroll
+        className="space-y-3 grow overflow-auto bg-gray-200 shadow-inner p-3 m-3 rounded-xl"
+      >
         <AnimatePresence>{children}</AnimatePresence>
       </motion.div>
     </div>

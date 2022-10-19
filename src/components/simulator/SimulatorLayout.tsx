@@ -25,20 +25,18 @@ export const SimulatorLayout: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-[800px] bg-gray-100 rounded-lg space-y-6 shadow h-fit">
+    <div className="flex flex-col w-[600px] shrink-0 bg-gray-100 rounded-lg space-y-6 shadow h-fit">
       <div className="bg-red-700 rounded-t-lg p-4">
         <h3 className="text-2xl text-gray-100 font-bold select-none">
           {title}
         </h3>
       </div>
-      <div className="px-4 space-y-6">
-        <div className="flex-grow grid grid-cols-2 gap-3">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="flex flex-col space-y-1">{inputs}</div>
-            <Button>計算する</Button>
-          </form>
-          {result}
-        </div>
+      <div className="px-4 flex-grow grid grid-cols-12 gap-5">
+        <form className="space-y-6 col-span-4" onSubmit={handleSubmit}>
+          <div className="flex flex-col space-y-2">{inputs}</div>
+          <Button>計算する</Button>
+        </form>
+        <div className="col-span-8">{result}</div>
       </div>
       <SimulatorAccordion title="備考欄">
         <Textarea

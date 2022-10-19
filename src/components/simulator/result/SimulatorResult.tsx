@@ -23,7 +23,7 @@ export const SimulatorResult: React.FC<Props> = ({
     <>
       <div
         id="result"
-        className="relative flex flex-col justify-between rounded-lg bg-gray-200 p-6 shadow-inner"
+        className="h-full relative flex flex-col justify-between rounded-lg bg-gray-200 p-6 shadow-inner"
       >
         <AnimatePresence>
           {isShown ? (
