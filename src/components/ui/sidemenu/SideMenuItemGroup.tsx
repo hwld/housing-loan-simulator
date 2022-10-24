@@ -26,10 +26,10 @@ export const SideMenuItemGroup: React.FC<Props> = ({ children }) => {
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            className="ml-5 mt-2 space-y-1"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            className="ml-5 space-y-1 overflow-hidden h-0"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
           >
             {children}
           </motion.div>
