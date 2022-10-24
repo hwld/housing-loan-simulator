@@ -24,8 +24,9 @@ export const SideMenu: React.FC<Props> = ({ currentPage }) => {
         </a>
       </Link>
       <div className="w-full h-[1px] bg-gray-100 mt-3"></div>
-      <LayoutGroup>
-        <nav className="flex flex-col mt-3 space-y-1">
+
+      <nav className="flex flex-col mt-3 space-y-1">
+        <LayoutGroup>
           <SideMenuItemGroup>
             <SideMenuItem
               href={page.borrowableByMonthly}
@@ -50,8 +51,8 @@ export const SideMenu: React.FC<Props> = ({ currentPage }) => {
           >
             月々の返済額
           </SideMenuItem>
-        </nav>
-      </LayoutGroup>
+        </LayoutGroup>
+      </nav>
     </div>
   );
 };

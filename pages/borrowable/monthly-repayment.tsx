@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import { Simulator } from "../../src/components/simulator/borrowable/byMonthly/Simulator";
 import { SimulatorHistory } from "../../src/components/simulator/borrowable/byMonthly/SimulatorHistory";
 import { useSimulator } from "../../src/components/simulator/useSimulator";
@@ -7,22 +6,27 @@ import {
   borrowableByMonthlySchema,
   simulateBorrowableByMonthly,
 } from "../../src/models/simulator/borrowable/monthlyRepayment";
+import { NextPageWithLayout } from "../_app";
 
 //
-const MonthlyRepayment: NextPage = () => {
+const MonthlyRepayment: NextPageWithLayout = () => {
   const { simulator, simulationHistory, removeHistory, removeAllHistories } =
     useSimulator(simulateBorrowableByMonthly, borrowableByMonthlySchema);
 
   return (
-    <Layout currentPage="/borrowable/monthly-repayment">
+    <>
       <Simulator simulator={simulator} />
       <SimulatorHistory
         history={simulationHistory}
         onRemoveHistory={removeHistory}
         onRemoveAllHistories={removeAllHistories}
       />
-    </Layout>
+    </>
   );
+};
+
+MonthlyRepayment.getLayout = (page) => {
+  return <Layout currentPage="/borrowable/monthly-repayment">{page}</Layout>;
 };
 
 export default MonthlyRepayment;
