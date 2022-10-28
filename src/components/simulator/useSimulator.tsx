@@ -9,6 +9,13 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 import { z } from "zod";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
+type SimulatorParams<FormData, Result> = {
+  key: string;
+  innerSimulate: (formData: FormData) => Result;
+  formDataSchema: z.Schema<FormData>;
+};
 
 export type SimulatorProps<FormData extends FieldValues, Result> = {
   simulate: (
@@ -33,17 +40,25 @@ type UseSimulatorResult<FormData extends FieldValues, Result> = {
 export const useSimulator = <
   SimulatorFormData extends FieldValues,
   SimulatorResult
->(
-  innerSimulate: (formData: SimulatorFormData) => SimulatorResult,
-  formDataSchema: z.Schema<SimulatorFormData>
-): UseSimulatorResult<SimulatorFormData, SimulatorResult> => {
+>({
+  innerSimulate,
+  formDataSchema,
+  key,
+}: SimulatorParams<SimulatorFormData, SimulatorResult>): UseSimulatorResult<
+  SimulatorFormData,
+  SimulatorResult
+> => {
   const [simulationResult, setSimulationResult] = useState<
     (SimulatorFormData & SimulatorResult) | undefined
   >(undefined);
 
-  const [simulationHistory, setSimulationHistory] = useState<
+  const {
+    value: simulationHistory,
+    writeValue,
+    removeValue,
+  } = useLocalStorage<
     (SimulatorFormData & SimulatorResult & { id: string; remarks: string })[]
-  >([]);
+  >(key);
 
   const [remarks, setRemarks] = useState("");
   const handleChangeRemarks = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -65,31 +80,31 @@ export const useSimulator = <
       const history = { ...result, ...getValues() };
       setSimulationResult(history);
 
-      setSimulationHistory((histories) => {
+      writeValue((histories) => {
         return [
           { ...history, id: Math.random().toString(), remarks },
-          ...histories,
+          ...(histories ?? []),
         ];
       });
     };
 
     return buildSubmitHandler(handleSubmit);
-  }, [buildSubmitHandler, getValues, innerSimulate, remarks]);
+  }, [buildSubmitHandler, getValues, innerSimulate, remarks, writeValue]);
 
   const removeHistory = (index: number) => {
-    if (index < 0 && index >= simulationHistory.length) {
+    if (index < 0 && simulationHistory && index >= simulationHistory.length) {
       return;
     }
 
-    setSimulationHistory((history) => {
-      return history.filter((_, i) => {
+    writeValue((histories) => {
+      return histories?.filter((_, i) => {
         return i !== index;
       });
     });
   };
 
   const removeAllHistories = () => {
-    setSimulationHistory([]);
+    removeValue();
   };
 
   return {
@@ -100,7 +115,7 @@ export const useSimulator = <
       remarks,
       handleChangeRemarks,
     },
-    simulationHistory,
+    simulationHistory: simulationHistory ?? [],
     removeHistory,
     removeAllHistories,
   };
