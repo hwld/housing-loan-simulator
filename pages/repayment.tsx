@@ -10,22 +10,26 @@ import { NextPageWithLayout } from "./_app";
 
 const Repayment: NextPageWithLayout = () => {
   const { simulator, simulationHistory, removeHistory, removeAllHistories } =
-    useSimulator(simulateRepayment, repaymentSchema);
+    useSimulator({
+      key: "repayment",
+      innerSimulate: simulateRepayment,
+      formDataSchema: repaymentSchema,
+    });
 
   return (
-    <Layout currentPage="/repayment">
+    <>
       <Simulator simulator={simulator} />
       <SimulatorHistory
         history={simulationHistory}
         onRemoveHistory={removeHistory}
         onRemoveAllHistories={removeAllHistories}
       />
-    </Layout>
+    </>
   );
 };
 
-// Repayment.getLayout = (page) => {
-//   return <Layout currentPage="/repayment">{page}</Layout>;
-// };
+Repayment.getLayout = (page) => {
+  return <Layout currentPage="/repayment">{page}</Layout>;
+};
 
 export default Repayment;

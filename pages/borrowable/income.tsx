@@ -10,7 +10,11 @@ import { NextPageWithLayout } from "../_app";
 
 const Income: NextPageWithLayout = () => {
   const { simulator, simulationHistory, removeHistory, removeAllHistories } =
-    useSimulator(simulateBorrowableByIncome, borrowableByIncomeSchema);
+    useSimulator({
+      key: "income",
+      innerSimulate: simulateBorrowableByIncome,
+      formDataSchema: borrowableByIncomeSchema,
+    });
 
   return (
     <>

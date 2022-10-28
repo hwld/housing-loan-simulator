@@ -11,7 +11,11 @@ import { NextPageWithLayout } from "../_app";
 //
 const MonthlyRepayment: NextPageWithLayout = () => {
   const { simulator, simulationHistory, removeHistory, removeAllHistories } =
-    useSimulator(simulateBorrowableByMonthly, borrowableByMonthlySchema);
+    useSimulator({
+      key: "monthly-repayment",
+      innerSimulate: simulateBorrowableByMonthly,
+      formDataSchema: borrowableByMonthlySchema,
+    });
 
   return (
     <>
